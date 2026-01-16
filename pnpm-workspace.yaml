@@ -2,16 +2,22 @@ packages:
   - .
 
 catalog:
-  "@stylistic/eslint-plugin": ^5.7.0
-  "@typescript/native-preview": 7.0.0-dev.20260113.1
+  '@jest/globals': ^30.2.0
+  '@stylistic/eslint-plugin': ^5.7.0
+  '@types/jest': ^30.0.0
+  '@types/node': ^25.0.8
+  '@typescript/native-preview': 7.0.0-dev.20260113.1
   eslint: ^9.39.2
   eslint-plugin-import-x: ^4.16.1
   eslint-plugin-oxlint: ^1.39.0
+  jest: ^30.2.0
   lint-staged: ^16.2.7
   oxfmt: ^0.24.0
   oxlint: ^1.39.0
   oxlint-tsgolint: ^0.11.0
   sort-package-json: ^3.6.0
+  ts-jest: ^29.4.6
+  tsdown: 0.20.0-beta.2
   typescript: ^5.9.3
   typescript-eslint: ^8.53.0
 

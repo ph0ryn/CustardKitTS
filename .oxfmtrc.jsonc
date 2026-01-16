@@ -11,4 +11,5 @@
   "endOfLine": "lf",
   "insertFinalNewline": true,
   "experimentalSortPackageJson": false,
+  "ignorePatterns": ["pnpm-*.yaml"],
 }

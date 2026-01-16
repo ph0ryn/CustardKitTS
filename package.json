@@ -2,40 +2,55 @@
   "name": "ts-base",
   "private": true,
   "type": "module",
-  "module": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "scripts": {
+    "build": "tsdown",
     "format": "pnpm run lint --fix . ; oxfmt . ; eslint --fix .",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "git config core.hooksPath .githooks",
     "lint": "oxlint --type-aware",
-    "precommit": "pnpm run typecheck && pnpm run format",
+    "precommit": "pnpm run typecheck && pnpm run format && pnpm run test",
+    "test": "jest",
     "typecheck": "tsgo -p . --noEmit"
   },
   "lint-staged": {
     "src/**/*.ts": [
       "pnpm run precommit"
     ],
-    "*.js": [
+    "*.{js,mjs}": [
       "pnpm run format"
     ],
-    "*.mjs": [
-      "pnpm run format"
+    "*.{json,jsonc}": [
+      "pnpm oxfmt ."
     ],
     "package.json": [
       "sort-package-json"
     ]
   },
   "devDependencies": {
+    "@jest/globals": "catalog:",
     "@stylistic/eslint-plugin": "catalog:",
+    "@types/jest": "catalog:",
+    "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-import-x": "catalog:",
     "eslint-plugin-oxlint": "catalog:",
+    "jest": "catalog:",
     "lint-staged": "catalog:",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
     "sort-package-json": "catalog:",
+    "ts-jest": "catalog:",
+    "tsdown": "catalog:",
     "typescript-eslint": "catalog:"
   },
   "peerDependencies": {

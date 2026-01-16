@@ -1,33 +1,69 @@
-# ts-base
+# CustardKitTS
 
-ph0ryn's typescript base template
+TypeScript implementation of [CustardKit](https://github.com/azooKey/CustardKit)
 
-## requirement
+## Installation
 
-- pnpm (package manager)
-
-## script
-
-`pnpm run <script>`
-
-```json
-{
-  "format": "pnpm run lint --fix . ; oxfmt . ; eslint --fix .",
-  "lint": "oxlint --type-aware",
-  "precommit": "pnpm run typecheck && pnpm run format",
-  "typecheck": "tsgo -p . --noEmit"
-}
+```bash
+pnpm add custardkit-ts
 ```
 
-## Linter
+## Usage
 
-- [ESLint](./eslint.config.mjs)
-  - eslint-plugin-import-x
-  - typescript-eslint
-  - @stylistic/eslint-plugin
-- [oxlint](./.oxlintrc.json)
-  - @stylistic/eslint-plugin
+```typescript
+import {
+  Custard,
+  Interface,
+  Metadata,
+  GridFitLayout,
+  GridFitSpecifier,
+  KeyData,
+  CustomKey,
+  KeyDesign,
+  TextLabel,
+  InputAction,
+  Language,
+  InputStyle,
+  KeyStyle,
+  KeyColor,
+} from "custardkit-ts";
 
-## Formatter
+// Create a simple key
+const key = new CustomKey({
+  design: new KeyDesign({
+    label: new TextLabel("あ"),
+    color: KeyColor.Normal,
+  }),
+  pressActions: [new InputAction("あ")],
+  longpressActions: null,
+  variations: [],
+});
 
-- [oxfmt](./.oxfmtrc.jsonc)
+// Create the custard
+const custard = new Custard({
+  identifier: "my_keyboard",
+  language: Language.JaJP,
+  inputStyle: InputStyle.Direct,
+  metadata: new Metadata({
+    custardVersion: "1.2",
+    displayName: "My Keyboard",
+  }),
+  interface: new Interface({
+    keyStyle: KeyStyle.TenkeyStyle,
+    keyLayout: new GridFitLayout({ rowCount: 5, columnCount: 4 }),
+    keys: [
+      new KeyData({
+        specifier: new GridFitSpecifier({ x: 0, y: 0 }),
+        key: key,
+      }),
+    ],
+  }),
+});
+
+// Write to file
+await custard.write("my_keyboard.json");
+```
+
+## License
+
+MIT
