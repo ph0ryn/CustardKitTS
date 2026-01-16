@@ -12,7 +12,7 @@ export interface GridFitLayoutOptions {
   columnCount: number;
 }
 
-export class GridFitLayout implements Serializable {
+class GridFitLayout implements Serializable {
   public readonly rowCount: number;
   public readonly columnCount: number;
 
@@ -36,7 +36,7 @@ export interface GridScrollLayoutOptions {
   columnCount: number;
 }
 
-export class GridScrollLayout implements Serializable {
+class GridScrollLayout implements Serializable {
   public readonly direction: ScrollDirection;
   public readonly rowCount: number;
   public readonly columnCount: number;
@@ -58,6 +58,11 @@ export class GridScrollLayout implements Serializable {
 }
 
 export type Layout = GridFitLayout | GridScrollLayout;
+
+export const Layout = {
+  gridFit: (options: GridFitLayoutOptions) => new GridFitLayout(options),
+  gridScroll: (options: GridScrollLayoutOptions) => new GridScrollLayout(options),
+} as const;
 
 // =============================================================================
 // Position Specifiers

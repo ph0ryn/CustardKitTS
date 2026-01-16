@@ -1,20 +1,20 @@
-import { InputAction, type Action, type Serializable } from "./actions.ts";
+import { Action, type Action as ActionType, type Serializable } from "./actions.ts";
 import { FlickDirection, KeyColor, type LongpressDuration, type SystemKeyType } from "./enums.ts";
-import { TextLabel, type Label } from "./labels.ts";
+import { Label } from "./labels.ts";
 
 // =============================================================================
 // LongpressAction
 // =============================================================================
 
 export interface LongpressActionOptions {
-  start?: Action[];
-  repeat?: Action[];
+  start?: ActionType[];
+  repeat?: ActionType[];
   duration?: LongpressDuration;
 }
 
 export class LongpressAction implements Serializable {
-  public readonly start: Action[];
-  public readonly repeat: Action[];
+  public readonly start: ActionType[];
+  public readonly repeat: ActionType[];
   public readonly duration?: LongpressDuration;
 
   constructor(options: LongpressActionOptions = {}) {
@@ -85,13 +85,13 @@ export class VariationDesign implements Serializable {
 
 export interface VariationOptions {
   design: VariationDesign;
-  pressActions?: Action[];
+  pressActions?: ActionType[];
   longpressActions?: LongpressAction;
 }
 
 export class Variation implements Serializable {
   public readonly design: VariationDesign;
-  public readonly pressActions: Action[];
+  public readonly pressActions: ActionType[];
   public readonly longpressActions: LongpressAction;
 
   constructor(options: VariationOptions) {
@@ -160,7 +160,7 @@ export type VariationData = FlickVariationData | LongpressVariationData;
 
 export interface CustomKeyOptions {
   design: KeyDesign;
-  pressActions?: Action[];
+  pressActions?: ActionType[];
   longpressActions?: LongpressAction;
   variations?: VariationData[];
 }
@@ -170,7 +170,7 @@ export type SimpleInputArgument = string | { label: string; input: string };
 
 export class CustomKey implements Serializable {
   public readonly design: KeyDesign;
-  public readonly pressActions: Action[];
+  public readonly pressActions: ActionType[];
   public readonly longpressActions: LongpressAction;
   public readonly variations: VariationData[];
 
@@ -214,8 +214,8 @@ export class CustomKey implements Serializable {
           new FlickVariationData({
             direction,
             key: new Variation({
-              design: new VariationDesign({ label: new TextLabel(sub) }),
-              pressActions: [new InputAction(sub)],
+              design: new VariationDesign({ label: Label.text(sub) }),
+              pressActions: [Action.input(sub)],
             }),
           }),
         );
@@ -223,8 +223,8 @@ export class CustomKey implements Serializable {
     }
 
     return new CustomKey({
-      design: new KeyDesign({ label: new TextLabel(centerLabel ?? center) }),
-      pressActions: [new InputAction(center)],
+      design: new KeyDesign({ label: Label.text(centerLabel ?? center) }),
+      pressActions: [Action.input(center)],
       variations,
     });
   }
@@ -266,8 +266,8 @@ export class CustomKey implements Serializable {
           new FlickVariationData({
             direction,
             key: new Variation({
-              design: new VariationDesign({ label: new TextLabel(parsed.label) }),
-              pressActions: [new InputAction(parsed.input)],
+              design: new VariationDesign({ label: Label.text(parsed.label) }),
+              pressActions: [Action.input(parsed.input)],
             }),
           }),
         );
@@ -275,8 +275,8 @@ export class CustomKey implements Serializable {
     }
 
     return new CustomKey({
-      design: new KeyDesign({ label: new TextLabel(centerParsed.label) }),
-      pressActions: [new InputAction(centerParsed.input)],
+      design: new KeyDesign({ label: Label.text(centerParsed.label) }),
+      pressActions: [Action.input(centerParsed.input)],
       variations,
     });
   }

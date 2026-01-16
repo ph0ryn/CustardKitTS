@@ -37,7 +37,7 @@ export default defineConfig(
         },
         {
           selector: "variable",
-          format: ["strictCamelCase", "UPPER_CASE"],
+          format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
         },
         {
           selector: "parameter",

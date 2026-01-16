@@ -4,7 +4,7 @@ import type { Serializable } from "./actions.ts";
 // Labels - matching Python version
 // =============================================================================
 
-export class TextLabel implements Serializable {
+class TextLabel implements Serializable {
   constructor(public readonly text: string) {}
 
   toJSON(): object {
@@ -12,7 +12,7 @@ export class TextLabel implements Serializable {
   }
 }
 
-export class SystemImageLabel implements Serializable {
+class SystemImageLabel implements Serializable {
   constructor(public readonly systemImage: string) {}
 
   toJSON(): object {
@@ -20,7 +20,7 @@ export class SystemImageLabel implements Serializable {
   }
 }
 
-export class MainAndSubLabel implements Serializable {
+class MainAndSubLabel implements Serializable {
   constructor(
     public readonly main: string,
     public readonly sub: string,
@@ -38,7 +38,7 @@ export interface DirectionalLabels {
   bottom?: string;
 }
 
-export class MainAndDirectionsLabel implements Serializable {
+class MainAndDirectionsLabel implements Serializable {
   constructor(
     public readonly main: string,
     public readonly directions: DirectionalLabels,
@@ -50,3 +50,11 @@ export class MainAndDirectionsLabel implements Serializable {
 }
 
 export type Label = MainAndDirectionsLabel | MainAndSubLabel | SystemImageLabel | TextLabel;
+
+export const Label = {
+  mainAndDirections: (main: string, directions: DirectionalLabels) =>
+    new MainAndDirectionsLabel(main, directions),
+  mainAndSub: (main: string, sub: string) => new MainAndSubLabel(main, sub),
+  systemImage: (systemImage: string) => new SystemImageLabel(systemImage),
+  text: (text: string) => new TextLabel(text),
+} as const;

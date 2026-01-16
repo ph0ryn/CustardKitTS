@@ -12,7 +12,7 @@ export interface Serializable {
 // Actions - matching Python version
 // =============================================================================
 
-export class InputAction implements Serializable {
+class InputAction implements Serializable {
   constructor(public readonly text: string) {}
 
   toJSON(): object {
@@ -20,13 +20,13 @@ export class InputAction implements Serializable {
   }
 }
 
-export class PasteAction implements Serializable {
+class PasteAction implements Serializable {
   toJSON(): object {
     return { type: "paste" };
   }
 }
 
-export class DeleteAction implements Serializable {
+class DeleteAction implements Serializable {
   constructor(public readonly count: number = 1) {}
 
   toJSON(): object {
@@ -34,7 +34,7 @@ export class DeleteAction implements Serializable {
   }
 }
 
-export class MoveCursorAction implements Serializable {
+class MoveCursorAction implements Serializable {
   constructor(public readonly count: number) {}
 
   toJSON(): object {
@@ -42,7 +42,7 @@ export class MoveCursorAction implements Serializable {
   }
 }
 
-export class ReplaceDefaultAction implements Serializable {
+class ReplaceDefaultAction implements Serializable {
   constructor(
     public readonly replaceType?: ReplaceType,
     public readonly fallbacks?: ReplaceType[],
@@ -63,7 +63,7 @@ export class ReplaceDefaultAction implements Serializable {
   }
 }
 
-export class ReplaceLastCharactersAction implements Serializable {
+class ReplaceLastCharactersAction implements Serializable {
   constructor(public readonly table: Record<string, string>) {}
 
   toJSON(): object {
@@ -71,7 +71,7 @@ export class ReplaceLastCharactersAction implements Serializable {
   }
 }
 
-export class SmartDeleteAction implements Serializable {
+class SmartDeleteAction implements Serializable {
   constructor(
     public readonly targets: string[],
     public readonly direction: ScanDirection,
@@ -82,13 +82,13 @@ export class SmartDeleteAction implements Serializable {
   }
 }
 
-export class SmartDeleteDefaultAction implements Serializable {
+class SmartDeleteDefaultAction implements Serializable {
   toJSON(): object {
     return { type: "smart_delete_default" };
   }
 }
 
-export class SmartMoveCursorAction implements Serializable {
+class SmartMoveCursorAction implements Serializable {
   constructor(
     public readonly targets: string[],
     public readonly direction: ScanDirection,
@@ -99,7 +99,7 @@ export class SmartMoveCursorAction implements Serializable {
   }
 }
 
-export class SelectCandidateAction implements Serializable {
+class SelectCandidateAction implements Serializable {
   constructor(public readonly selection: { type: string; value?: number }) {}
 
   toJSON(): object {
@@ -107,13 +107,13 @@ export class SelectCandidateAction implements Serializable {
   }
 }
 
-export class CompleteAction implements Serializable {
+class CompleteAction implements Serializable {
   toJSON(): object {
     return { type: "complete" };
   }
 }
 
-export class CompleteCharacterFormAction implements Serializable {
+class CompleteCharacterFormAction implements Serializable {
   constructor(public readonly forms: CharacterForm[]) {}
 
   toJSON(): object {
@@ -121,7 +121,7 @@ export class CompleteCharacterFormAction implements Serializable {
   }
 }
 
-export class MoveTabAction implements Serializable {
+class MoveTabAction implements Serializable {
   constructor(
     public readonly tabType: "system" | "custom",
     public readonly identifier: SystemTabType | string,
@@ -132,37 +132,37 @@ export class MoveTabAction implements Serializable {
   }
 }
 
-export class ToggleTabBarAction implements Serializable {
+class ToggleTabBarAction implements Serializable {
   toJSON(): object {
     return { type: "toggle_tab_bar" };
   }
 }
 
-export class ToggleCursorBarAction implements Serializable {
+class ToggleCursorBarAction implements Serializable {
   toJSON(): object {
     return { type: "toggle_cursor_bar" };
   }
 }
 
-export class ToggleCapsLockStateAction implements Serializable {
+class ToggleCapsLockStateAction implements Serializable {
   toJSON(): object {
     return { type: "toggle_caps_lock_state" };
   }
 }
 
-export class EnableResizingModeAction implements Serializable {
+class EnableResizingModeAction implements Serializable {
   toJSON(): object {
     return { type: "enable_resizing_mode" };
   }
 }
 
-export class DismissKeyboardAction implements Serializable {
+class DismissKeyboardAction implements Serializable {
   toJSON(): object {
     return { type: "dismiss_keyboard" };
   }
 }
 
-export class LaunchApplicationAction implements Serializable {
+class LaunchApplicationAction implements Serializable {
   constructor(
     public readonly schemeType: "azooKey" | "shortcuts",
     public readonly target: string,
@@ -194,3 +194,31 @@ export type Action =
   | ToggleCapsLockStateAction
   | ToggleCursorBarAction
   | ToggleTabBarAction;
+
+export const Action = {
+  complete: () => new CompleteAction(),
+  completeCharacterForm: (forms: CharacterForm[]) => new CompleteCharacterFormAction(forms),
+  delete: (count: number = 1) => new DeleteAction(count),
+  dismissKeyboard: () => new DismissKeyboardAction(),
+  enableResizingMode: () => new EnableResizingModeAction(),
+  input: (text: string) => new InputAction(text),
+  launchApplication: (schemeType: "azooKey" | "shortcuts", target: string) =>
+    new LaunchApplicationAction(schemeType, target),
+  moveCursor: (count: number) => new MoveCursorAction(count),
+  moveTab: (tabType: "system" | "custom", identifier: SystemTabType | string) =>
+    new MoveTabAction(tabType, identifier),
+  paste: () => new PasteAction(),
+  replaceDefault: (replaceType?: ReplaceType, fallbacks?: ReplaceType[]) =>
+    new ReplaceDefaultAction(replaceType, fallbacks),
+  replaceLastCharacters: (table: Record<string, string>) => new ReplaceLastCharactersAction(table),
+  selectCandidate: (selection: { type: string; value?: number }) =>
+    new SelectCandidateAction(selection),
+  smartDelete: (targets: string[], direction: ScanDirection) =>
+    new SmartDeleteAction(targets, direction),
+  smartDeleteDefault: () => new SmartDeleteDefaultAction(),
+  smartMoveCursor: (targets: string[], direction: ScanDirection) =>
+    new SmartMoveCursorAction(targets, direction),
+  toggleCapsLockState: () => new ToggleCapsLockStateAction(),
+  toggleCursorBar: () => new ToggleCursorBarAction(),
+  toggleTabBar: () => new ToggleTabBarAction(),
+} as const;

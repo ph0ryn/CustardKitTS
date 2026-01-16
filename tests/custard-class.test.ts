@@ -1,26 +1,25 @@
 import { describe, expect, test } from "@jest/globals";
 import {
+  Action,
   Custard,
   CustardList,
   CustomKey,
-  DeleteAction,
   FlickDirection,
   FlickVariationData,
-  GridFitLayout,
   GridFitSpecifier,
-  InputAction,
   InputStyle,
   Interface,
   KeyColor,
   KeyData,
   KeyDesign,
   KeyStyle,
+  Label,
   Language,
+  Layout,
   LongpressAction,
   Metadata,
   SystemKey,
   SystemKeyType,
-  TextLabel,
   Variation,
   VariationDesign,
 } from "../src/index.ts";
@@ -31,7 +30,7 @@ describe("class-based custard", () => {
       identifier: "my_custard",
       inputStyle: InputStyle.Direct,
       interface: new Interface({
-        keyLayout: new GridFitLayout({ columnCount: 2, rowCount: 2 }),
+        keyLayout: Layout.gridFit({ columnCount: 2, rowCount: 2 }),
         keyStyle: KeyStyle.TenkeyStyle,
         keys: [
           new KeyData({
@@ -42,19 +41,19 @@ describe("class-based custard", () => {
             key: new CustomKey({
               design: new KeyDesign({
                 color: KeyColor.Normal,
-                label: new TextLabel("あ"),
+                label: Label.text("あ"),
               }),
               longpressActions: new LongpressAction({
-                start: [new DeleteAction(1)],
+                start: [Action.delete(1)],
               }),
               variations: [
                 new FlickVariationData({
                   direction: FlickDirection.Left,
                   key: new Variation({
                     design: new VariationDesign({
-                      label: new TextLabel("い"),
+                      label: Label.text("い"),
                     }),
-                    pressActions: [new InputAction("い")],
+                    pressActions: [Action.input("い")],
                   }),
                 }),
               ],
@@ -83,22 +82,22 @@ describe("class-based custard", () => {
   });
 
   test("actions serialize correctly", () => {
-    const input = new InputAction("あ");
+    const input = Action.input("あ");
     expect(input.toJSON()).toEqual({ text: "あ", type: "input" });
 
-    const del = new DeleteAction(3);
+    const del = Action.delete(3);
     expect(del.toJSON()).toEqual({ count: 3, type: "delete" });
   });
 
   test("labels serialize correctly", () => {
-    const text = new TextLabel("ABC");
+    const text = Label.text("ABC");
     expect(text.toJSON()).toEqual({ text: "ABC" });
   });
 
   test("key designs serialize correctly", () => {
     const design = new KeyDesign({
       color: KeyColor.Special,
-      label: new TextLabel("空白"),
+      label: Label.text("空白"),
     });
     expect(design.toJSON()).toEqual({
       color: "special",
@@ -144,7 +143,7 @@ describe("class-based custard", () => {
       identifier: "test1",
       inputStyle: InputStyle.Direct,
       interface: new Interface({
-        keyLayout: new GridFitLayout({ columnCount: 1, rowCount: 1 }),
+        keyLayout: Layout.gridFit({ columnCount: 1, rowCount: 1 }),
         keyStyle: KeyStyle.TenkeyStyle,
         keys: [],
       }),
@@ -156,7 +155,7 @@ describe("class-based custard", () => {
       identifier: "test2",
       inputStyle: InputStyle.Direct,
       interface: new Interface({
-        keyLayout: new GridFitLayout({ columnCount: 1, rowCount: 1 }),
+        keyLayout: Layout.gridFit({ columnCount: 1, rowCount: 1 }),
         keyStyle: KeyStyle.TenkeyStyle,
         keys: [],
       }),
