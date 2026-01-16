@@ -1,12 +1,6 @@
-import {
-  KeyColor,
-  type FlickDirection,
-  type LongpressDuration,
-  type SystemKeyType,
-} from "./enums.ts";
-
-import type { Action, Serializable } from "./actions.ts";
-import type { Label } from "./labels.ts";
+import { InputAction, type Action, type Serializable } from "./actions.ts";
+import { FlickDirection, KeyColor, type LongpressDuration, type SystemKeyType } from "./enums.ts";
+import { TextLabel, type Label } from "./labels.ts";
 
 // =============================================================================
 // LongpressAction
@@ -171,6 +165,9 @@ export interface CustomKeyOptions {
   variations?: VariationData[];
 }
 
+// Type for flickSimpleInputAndLabels arguments
+export type SimpleInputArgument = string | { label: string; input: string };
+
 export class CustomKey implements Serializable {
   public readonly design: KeyDesign;
   public readonly pressActions: Action[];
@@ -191,6 +188,97 @@ export class CustomKey implements Serializable {
       press_actions: this.pressActions.map((a) => a.toJSON()),
       variations: this.variations.map((v) => v.toJSON()),
     };
+  }
+
+  /**
+   * Create a flick-style key with center and directional inputs.
+   * Directions are assigned in order: left, top, right, bottom.
+   */
+  static flickSimpleInputs(center: string, subs: string[], centerLabel?: string): CustomKey {
+    const directions: FlickDirection[] = [
+      FlickDirection.Left,
+      FlickDirection.Top,
+      FlickDirection.Right,
+      FlickDirection.Bottom,
+    ];
+    const variations: FlickVariationData[] = [];
+
+    const limit = Math.min(subs.length, 4);
+
+    for (let i = 0; i < limit; i++) {
+      const sub = subs[i];
+      const direction = directions[i];
+
+      if (sub !== undefined && direction !== undefined) {
+        variations.push(
+          new FlickVariationData({
+            direction,
+            key: new Variation({
+              design: new VariationDesign({ label: new TextLabel(sub) }),
+              pressActions: [new InputAction(sub)],
+            }),
+          }),
+        );
+      }
+    }
+
+    return new CustomKey({
+      design: new KeyDesign({ label: new TextLabel(centerLabel ?? center) }),
+      pressActions: [new InputAction(center)],
+      variations,
+    });
+  }
+
+  /**
+   * Create a flick-style key with label and input for each direction.
+   * Each argument can be a string (label=input) or {label, input} object.
+   */
+  static flickSimpleInputAndLabels(options: {
+    center: SimpleInputArgument;
+    left?: SimpleInputArgument;
+    top?: SimpleInputArgument;
+    right?: SimpleInputArgument;
+    bottom?: SimpleInputArgument;
+  }): CustomKey {
+    const parseArg = (arg: SimpleInputArgument): { label: string; input: string } => {
+      if (typeof arg === "string") {
+        return { input: arg, label: arg };
+      }
+
+      return arg;
+    };
+
+    const centerParsed = parseArg(options.center);
+    const variations: FlickVariationData[] = [];
+
+    const directionArgs: [FlickDirection, SimpleInputArgument | undefined][] = [
+      [FlickDirection.Left, options.left],
+      [FlickDirection.Top, options.top],
+      [FlickDirection.Right, options.right],
+      [FlickDirection.Bottom, options.bottom],
+    ];
+
+    for (const [direction, arg] of directionArgs) {
+      if (arg !== undefined) {
+        const parsed = parseArg(arg);
+
+        variations.push(
+          new FlickVariationData({
+            direction,
+            key: new Variation({
+              design: new VariationDesign({ label: new TextLabel(parsed.label) }),
+              pressActions: [new InputAction(parsed.input)],
+            }),
+          }),
+        );
+      }
+    }
+
+    return new CustomKey({
+      design: new KeyDesign({ label: new TextLabel(centerParsed.label) }),
+      pressActions: [new InputAction(centerParsed.input)],
+      variations,
+    });
   }
 }
 

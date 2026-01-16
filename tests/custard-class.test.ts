@@ -1,6 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import {
   Custard,
+  CustardList,
   CustomKey,
   DeleteAction,
   FlickDirection,
@@ -103,5 +104,72 @@ describe("class-based custard", () => {
       color: "special",
       label: { text: "空白" },
     });
+  });
+
+  test("CustomKey.flickSimpleInputs creates flick key", () => {
+    const key = CustomKey.flickSimpleInputs("あ", ["い", "う", "え", "お"], "あいう");
+
+    const json = JSON.parse(JSON.stringify(key));
+    expect(json.design.label.text).toBe("あいう");
+    expect(json.press_actions[0].text).toBe("あ");
+    expect(json.variations).toHaveLength(4);
+    expect(json.variations[0].direction).toBe("left");
+    expect(json.variations[0].key.press_actions[0].text).toBe("い");
+    expect(json.variations[1].direction).toBe("top");
+    expect(json.variations[2].direction).toBe("right");
+    expect(json.variations[3].direction).toBe("bottom");
+  });
+
+  test("CustomKey.flickSimpleInputAndLabels creates labeled flick key", () => {
+    const key = CustomKey.flickSimpleInputAndLabels({
+      center: { input: ":smile:", label: "😀" },
+      left: "←",
+      top: { input: ":up:", label: "↑" },
+    });
+
+    const json = JSON.parse(JSON.stringify(key));
+    expect(json.design.label.text).toBe("😀");
+    expect(json.press_actions[0].text).toBe(":smile:");
+    expect(json.variations).toHaveLength(2);
+    expect(json.variations[0].direction).toBe("left");
+    expect(json.variations[0].key.design.label.text).toBe("←");
+    expect(json.variations[0].key.press_actions[0].text).toBe("←");
+    expect(json.variations[1].direction).toBe("top");
+    expect(json.variations[1].key.design.label.text).toBe("↑");
+    expect(json.variations[1].key.press_actions[0].text).toBe(":up:");
+  });
+
+  test("CustardList serializes to array", () => {
+    const custard1 = new Custard({
+      identifier: "test1",
+      inputStyle: InputStyle.Direct,
+      interface: new Interface({
+        keyLayout: new GridFitLayout({ columnCount: 1, rowCount: 1 }),
+        keyStyle: KeyStyle.TenkeyStyle,
+        keys: [],
+      }),
+      language: Language.JaJP,
+      metadata: new Metadata({ custardVersion: "1.0", displayName: "Test1" }),
+    });
+
+    const custard2 = new Custard({
+      identifier: "test2",
+      inputStyle: InputStyle.Direct,
+      interface: new Interface({
+        keyLayout: new GridFitLayout({ columnCount: 1, rowCount: 1 }),
+        keyStyle: KeyStyle.TenkeyStyle,
+        keys: [],
+      }),
+      language: Language.EnUS,
+      metadata: new Metadata({ custardVersion: "1.0", displayName: "Test2" }),
+    });
+
+    const list = new CustardList([custard1, custard2]);
+    const json = list.toJSON();
+
+    expect(Array.isArray(json)).toBe(true);
+    expect(json).toHaveLength(2);
+    expect((json[0] as { identifier: string }).identifier).toBe("test1");
+    expect((json[1] as { identifier: string }).identifier).toBe("test2");
   });
 });

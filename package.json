@@ -16,7 +16,7 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "git config core.hooksPath .githooks",
     "lint": "oxlint --type-aware",
-    "precommit": "pnpm run typecheck && pnpm run format && pnpm run test",
+    "precommit": "pnpm test && pnpm run typecheck && pnpm run format",
     "test": "jest",
     "typecheck": "tsgo -p . --noEmit"
   },

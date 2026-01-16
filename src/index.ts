@@ -65,6 +65,7 @@ export {
   type KeyDesignOptions,
   type LongpressActionOptions,
   type LongpressVariationDataOptions,
+  type SimpleInputArgument,
   type VariationData,
   type VariationDesignOptions,
   type VariationOptions,
@@ -89,6 +90,7 @@ export {
 // Custard
 export {
   Custard,
+  CustardList,
   Interface,
   Metadata,
   type CustardOptions,

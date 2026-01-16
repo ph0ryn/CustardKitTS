@@ -109,3 +109,31 @@ export class Custard implements Serializable {
     await writeFile(filename, content, { encoding: "utf8" });
   }
 }
+
+// =============================================================================
+// CustardList
+// =============================================================================
+
+export class CustardList {
+  public readonly custards: Custard[];
+
+  constructor(custards: Custard[]) {
+    this.custards = custards;
+  }
+
+  toJSON(): object[] {
+    return this.custards.map((c) => c.toJSON());
+  }
+
+  async write(name: string): Promise<void> {
+    let filename: string = name;
+
+    if (!name.endsWith(".json")) {
+      filename = `${name}.json`;
+    }
+
+    const content = `${JSON.stringify(this.toJSON(), null, 2)}\n`;
+
+    await writeFile(filename, content, { encoding: "utf8" });
+  }
+}
