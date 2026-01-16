@@ -5,7 +5,7 @@ TypeScript implementation of [CustardKit](https://github.com/azooKey/CustardKit)
 ## Installation
 
 ```bash
-pnpm add custardkit-ts
+npm add custardkit-ts
 ```
 
 ## Usage
@@ -35,7 +35,6 @@ const key = new CustomKey({
     color: KeyColor.Normal,
   }),
   pressActions: [new InputAction("あ")],
-  longpressActions: null,
   variations: [],
 });
 

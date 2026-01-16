@@ -1,21 +1,24 @@
 {
-  "name": "ts-base",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.mts",
-      "import": "./dist/index.mjs"
-    }
+  "name": "custardkit-ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ph0ryn/CustardKitTS.git"
   },
+  "license": "MIT",
+  "author": "ph0ryn",
+  "type": "module",
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsdown",
     "format": "pnpm run lint --fix . ; oxfmt . ; eslint --fix .",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "git config core.hooksPath .githooks",
     "lint": "oxlint --type-aware",
+    "prepack": "pnpm run precommit && pnpm run build && clean-pkg-json -r peerDependencies",
     "precommit": "pnpm test && pnpm run typecheck && pnpm run format",
     "test": "jest",
     "typecheck": "tsgo -p . --noEmit"
@@ -40,6 +43,7 @@
     "@types/jest": "catalog:",
     "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:",
+    "clean-pkg-json": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-import-x": "catalog:",
     "eslint-plugin-oxlint": "catalog:",
@@ -56,5 +60,14 @@
   "peerDependencies": {
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@10.28.0"
+  "packageManager": "pnpm@10.28.0",
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.mts",
+        "import": "./dist/index.mjs"
+      }
+    }
+  }
 }
