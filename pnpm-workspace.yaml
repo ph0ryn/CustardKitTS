@@ -1,0 +1,24 @@
+packages:
+  - .
+
+catalog:
+  "@stylistic/eslint-plugin": ^5.7.0
+  "@typescript/native-preview": 7.0.0-dev.20260113.1
+  eslint: ^9.39.2
+  eslint-plugin-import-x: ^4.16.1
+  eslint-plugin-oxlint: ^1.39.0
+  lint-staged: ^16.2.7
+  oxfmt: ^0.24.0
+  oxlint: ^1.39.0
+  oxlint-tsgolint: ^0.11.0
+  sort-package-json: ^3.6.0
+  typescript: ^5.9.3
+  typescript-eslint: ^8.53.0
+
+catalogMode: strict
+
+enablePrePostScripts: true
+
+minimumReleaseAge: 2880
+
+shellEmulator: true
