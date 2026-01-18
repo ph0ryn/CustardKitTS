@@ -1,3 +1,5 @@
+import { InvalidLayoutSizeError } from "../errors.ts";
+
 import type { Serializable } from "../types.ts";
 import type { GridFitSpecifier } from "./GridFitSpecifier.ts";
 
@@ -11,6 +13,14 @@ export class GridFitLayout implements Serializable {
   public readonly columnCount: number;
 
   constructor(options: GridFitLayoutOptions) {
+    if (options.rowCount < 1) {
+      throw new InvalidLayoutSizeError(`rowCount (${options.rowCount}) must be at least 1`);
+    }
+
+    if (options.columnCount < 1) {
+      throw new InvalidLayoutSizeError(`columnCount (${options.columnCount}) must be at least 1`);
+    }
+
     this.columnCount = options.columnCount;
     this.rowCount = options.rowCount;
   }

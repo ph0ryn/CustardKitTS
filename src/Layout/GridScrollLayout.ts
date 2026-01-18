@@ -1,3 +1,5 @@
+import { InvalidLayoutSizeError } from "../errors.ts";
+
 import type { ScrollDirection } from "../enums.ts";
 import type { Serializable } from "../types.ts";
 import type { GridScrollSpecifier } from "./GridScrollSpecifier.ts";
@@ -14,6 +16,14 @@ export class GridScrollLayout implements Serializable {
   public readonly columnCount: number;
 
   constructor(options: GridScrollLayoutOptions) {
+    if (options.rowCount < 1) {
+      throw new InvalidLayoutSizeError(`rowCount (${options.rowCount}) must be at least 1`);
+    }
+
+    if (options.columnCount < 1) {
+      throw new InvalidLayoutSizeError(`columnCount (${options.columnCount}) must be at least 1`);
+    }
+
     this.columnCount = options.columnCount;
     this.direction = options.direction;
     this.rowCount = options.rowCount;

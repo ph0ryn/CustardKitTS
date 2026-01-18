@@ -5,6 +5,10 @@ export class InputAction extends BaseAction {
 
   constructor(public readonly text: string) {
     super();
+
+    if (text === "") {
+      console.warn("InputAction: text is empty, which is meaningless");
+    }
   }
 
   toJSON(): object {

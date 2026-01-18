@@ -5,6 +5,10 @@ export class DeleteAction extends BaseAction {
 
   constructor(public readonly count: number = 1) {
     super();
+
+    if (count < 1) {
+      console.warn(`DeleteAction: count (${count}) is less than 1, which is meaningless`);
+    }
   }
 
   toJSON(): object {

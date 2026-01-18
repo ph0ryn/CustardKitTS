@@ -5,6 +5,10 @@ export class MoveCursorAction extends BaseAction {
 
   constructor(public readonly count: number) {
     super();
+
+    if (count === 0) {
+      console.warn("MoveCursorAction: count is 0, which is meaningless");
+    }
   }
 
   toJSON(): object {
