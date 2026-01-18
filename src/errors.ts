@@ -18,3 +18,18 @@ export class InvalidIdentifierError extends CustardKitError {
     this.name = "InvalidIdentifierError";
   }
 }
+
+export class InvalidKeyPositionError extends CustardKitError {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidKeyPositionError";
+  }
+}
+
+export class LayoutSpecifierMismatchError extends CustardKitError {
+  constructor(layoutType: string, specifierType: string) {
+    super(`Layout type "${layoutType}" is not compatible with specifier type "${specifierType}"`);
+
+    this.name = "LayoutSpecifierMismatchError";
+  }
+}

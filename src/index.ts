@@ -2,7 +2,13 @@
 export type { Serializable } from "./types.ts";
 
 // Errors
-export { CustardKitError, InvalidIdentifierError, ValidationError } from "./errors.ts";
+export {
+  CustardKitError,
+  InvalidIdentifierError,
+  InvalidKeyPositionError,
+  LayoutSpecifierMismatchError,
+  ValidationError,
+} from "./errors.ts";
 
 // Enums
 export {
