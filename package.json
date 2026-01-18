@@ -68,6 +68,26 @@
       ".": {
         "types": "./dist/index.d.mts",
         "import": "./dist/index.mjs"
+      },
+      "./Actions": {
+        "types": "./dist/Actions/index.d.mts",
+        "import": "./dist/Actions/index.mjs"
+      },
+      "./Labels": {
+        "types": "./dist/Labels/index.d.mts",
+        "import": "./dist/Labels/index.mjs"
+      },
+      "./Keys": {
+        "types": "./dist/Keys/index.d.mts",
+        "import": "./dist/Keys/index.mjs"
+      },
+      "./Layout": {
+        "types": "./dist/Layout/index.d.mts",
+        "import": "./dist/Layout/index.mjs"
+      },
+      "./Custard": {
+        "types": "./dist/Custard/index.d.mts",
+        "import": "./dist/Custard/index.mjs"
       }
     }
   }
