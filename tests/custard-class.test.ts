@@ -1,29 +1,30 @@
 import { describe, expect, test } from "@jest/globals";
+
+import { Action } from "../src/Actions/index.ts";
 import {
-  Action,
   Custard,
   CustardList,
-  CustomKey,
   FlickDirection,
-  FlickVariationData,
-  GridFitSpecifier,
   InputStyle,
   Interface,
   InvalidIdentifierError,
   KeyColor,
-  KeyData,
-  KeyDesign,
   KeyStyle,
-  Label,
   Language,
-  Layout,
-  LongpressAction,
   Metadata,
-  SystemKey,
   SystemKeyType,
+} from "../src/index.ts";
+import {
+  CustomKey,
+  FlickVariationData,
+  KeyDesign,
+  LongpressAction,
+  SystemKey,
   Variation,
   VariationDesign,
-} from "../src/index.ts";
+} from "../src/Keys/index.ts";
+import { Label } from "../src/Labels/index.ts";
+import { GridFitSpecifier, KeyData, Layout } from "../src/Layout/index.ts";
 
 describe("class-based custard", () => {
   test("creates custard matching Python example", () => {

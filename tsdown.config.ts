@@ -9,7 +9,6 @@ export default defineConfig({
     "src/Labels/index.ts",
     "src/Keys/index.ts",
     "src/Layout/index.ts",
-    "src/Custard/index.ts",
   ],
   format: ["esm"],
 });

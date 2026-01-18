@@ -84,10 +84,6 @@
       "./Layout": {
         "types": "./dist/Layout/index.d.mts",
         "import": "./dist/Layout/index.mjs"
-      },
-      "./Custard": {
-        "types": "./dist/Custard/index.d.mts",
-        "import": "./dist/Custard/index.mjs"
       }
     }
   }
