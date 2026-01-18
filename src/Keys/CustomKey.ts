@@ -37,8 +37,8 @@ export class CustomKey implements Serializable {
   toJSON(): object {
     return {
       design: this.design.toJSON(),
-      longpress_actions: this.longpressActions.toJSON(),
       press_actions: this.pressActions.map((a) => a.toJSON()),
+      longpress_actions: this.longpressActions.toJSON(),
       variations: this.variations.map((v) => v.toJSON()),
     };
   }

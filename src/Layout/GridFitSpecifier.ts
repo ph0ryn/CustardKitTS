@@ -35,10 +35,10 @@ export class GridFitSpecifier implements Serializable {
 
   toJSON(): object {
     return {
-      height: this.height,
-      width: this.width,
       x: this.x,
       y: this.y,
+      width: this.width,
+      height: this.height,
     };
   }
 

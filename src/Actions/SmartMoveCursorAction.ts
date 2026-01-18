@@ -13,6 +13,6 @@ export class SmartMoveCursorAction extends BaseAction {
   }
 
   toJSON(): object {
-    return { direction: this.direction, targets: this.targets, type: this.type };
+    return { type: this.type, direction: this.direction, targets: this.targets };
   }
 }

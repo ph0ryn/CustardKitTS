@@ -39,10 +39,10 @@ export class Custard implements Serializable {
   toJSON(): object {
     return {
       identifier: this.identifier,
-      input_style: this.inputStyle,
-      interface: this.interface.toJSON(),
       language: this.language,
+      input_style: this.inputStyle,
       metadata: this.metadata.toJSON(),
+      interface: this.interface.toJSON(),
     };
   }
 
@@ -53,7 +53,7 @@ export class Custard implements Serializable {
       filename = `${name}.json`;
     }
 
-    const content = `${JSON.stringify(this, null, 2)}\n`;
+    const content = `${JSON.stringify(this, null)}\n`;
 
     await writeFile(filename, content, { encoding: "utf8" });
   }
@@ -77,7 +77,7 @@ export class CustardList {
       filename = `${name}.json`;
     }
 
-    const content = `${JSON.stringify(this.toJSON(), null, 2)}\n`;
+    const content = `${JSON.stringify(this.toJSON(), null)}\n`;
 
     await writeFile(filename, content, { encoding: "utf8" });
   }

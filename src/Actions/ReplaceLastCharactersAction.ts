@@ -8,6 +8,6 @@ export class ReplaceLastCharactersAction extends BaseAction {
   }
 
   toJSON(): object {
-    return { table: this.table, type: this.type };
+    return { type: this.type, table: this.table };
   }
 }

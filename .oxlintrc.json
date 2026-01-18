@@ -21,7 +21,8 @@
     "no-inferrable-types": "off",
     "no-magic-numbers": "off",
     "prefer-destructuring": "off",
-    "sort-imports": "off"
+    "sort-imports": "off",
+    "sort-keys": "off"
   },
   "overrides": [
     {

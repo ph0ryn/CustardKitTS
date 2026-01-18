@@ -13,6 +13,6 @@ export class LongpressVariationData implements Serializable {
   }
 
   toJSON(): object {
-    return { key: this.key.toJSON(), type: "longpress_variation" };
+    return { type: "longpress_variation", key: this.key.toJSON() };
   }
 }

@@ -59,9 +59,9 @@ export class GridFitLayout implements Serializable {
 
   toJSON(): object {
     return {
-      column_count: this.columnCount,
-      row_count: this.rowCount,
       type: "grid_fit",
+      row_count: this.rowCount,
+      column_count: this.columnCount,
     };
   }
 }

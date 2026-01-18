@@ -54,10 +54,10 @@ export class GridScrollLayout implements Serializable {
 
   toJSON(): object {
     return {
-      column_count: this.columnCount,
+      type: "grid_scroll",
       direction: this.direction,
       row_count: this.rowCount,
-      type: "grid_scroll",
+      column_count: this.columnCount,
     };
   }
 }

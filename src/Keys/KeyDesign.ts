@@ -19,8 +19,8 @@ export class KeyDesign implements Serializable {
 
   toJSON(): object {
     return {
-      color: this.color,
       label: this.label.toJSON(),
+      color: this.color,
     };
   }
 

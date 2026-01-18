@@ -8,6 +8,6 @@ export class SelectCandidateAction extends BaseAction {
   }
 
   toJSON(): object {
-    return { selection: this.selection, type: this.type };
+    return { type: this.type, selection: this.selection };
   }
 }

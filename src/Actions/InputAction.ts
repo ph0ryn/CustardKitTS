@@ -12,6 +12,6 @@ export class InputAction extends BaseAction {
   }
 
   toJSON(): object {
-    return { text: this.text, type: this.type };
+    return { type: this.type, text: this.text };
   }
 }

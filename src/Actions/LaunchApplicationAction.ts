@@ -11,6 +11,6 @@ export class LaunchApplicationAction extends BaseAction {
   }
 
   toJSON(): object {
-    return { scheme_type: this.schemeType, target: this.target, type: this.type };
+    return { type: this.type, scheme_type: this.schemeType, target: this.target };
   }
 }

@@ -10,6 +10,6 @@ export class CompleteCharacterFormAction extends BaseAction {
   }
 
   toJSON(): object {
-    return { forms: this.forms, type: this.type };
+    return { type: this.type, forms: this.forms };
   }
 }

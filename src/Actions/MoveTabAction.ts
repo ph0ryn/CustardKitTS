@@ -13,6 +13,6 @@ export class MoveTabAction extends BaseAction {
   }
 
   toJSON(): object {
-    return { identifier: this.identifier, tab_type: this.tabType, type: this.type };
+    return { type: this.type, tab_type: this.tabType, identifier: this.identifier };
   }
 }

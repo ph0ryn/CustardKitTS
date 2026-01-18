@@ -24,8 +24,8 @@ export class Variation implements Serializable {
   toJSON(): object {
     return {
       design: this.design.toJSON(),
-      longpress_actions: this.longpressActions.toJSON(),
       press_actions: this.pressActions.map((a) => a.toJSON()),
+      longpress_actions: this.longpressActions.toJSON(),
     };
   }
 

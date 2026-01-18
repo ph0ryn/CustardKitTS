@@ -18,9 +18,9 @@ export class FlickVariationData implements Serializable {
 
   toJSON(): object {
     return {
+      type: "flick_variation",
       direction: this.direction,
       key: this.key.toJSON(),
-      type: "flick_variation",
     };
   }
 }

@@ -7,6 +7,6 @@ export class MainAndSubLabel implements Serializable {
   ) {}
 
   toJSON(): object {
-    return { main: this.main, sub: this.sub, type: "main_and_sub" };
+    return { type: "main_and_sub", main: this.main, sub: this.sub };
   }
 }

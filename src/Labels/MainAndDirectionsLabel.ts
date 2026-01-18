@@ -14,6 +14,6 @@ export class MainAndDirectionsLabel implements Serializable {
   ) {}
 
   toJSON(): object {
-    return { directions: this.directions, main: this.main, type: "main_and_directions" };
+    return { type: "main_and_directions", main: this.main, directions: this.directions };
   }
 }

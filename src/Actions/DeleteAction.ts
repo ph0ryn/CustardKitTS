@@ -12,6 +12,6 @@ export class DeleteAction extends BaseAction {
   }
 
   toJSON(): object {
-    return { count: this.count, type: this.type };
+    return { type: this.type, count: this.count };
   }
 }
