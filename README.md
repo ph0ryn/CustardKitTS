@@ -2,6 +2,12 @@
 
 TypeScript implementation of [CustardKit](https://github.com/azooKey/CustardKit)
 
+## Features
+
+- **Type Safety**: Fully typed with TypeScript, ensuring autocomplete and compile-time error checking.
+- **Runtime Validation**: Validates inputs at runtime to prevent invalid keyboard configurations.
+- **Direct Serialization**: Classes support direct JSON serialization via `JSON.stringify()`.
+
 ## Installation
 
 ```bash
@@ -11,22 +17,11 @@ npm add custardkit-ts
 ## Usage
 
 ```typescript
-import {
-  Action,
-  Custard,
-  CustomKey,
-  GridFitSpecifier,
-  InputStyle,
-  Interface,
-  KeyColor,
-  KeyData,
-  KeyDesign,
-  KeyStyle,
-  Label,
-  Language,
-  Layout,
-  Metadata,
-} from "custardkit-ts";
+import { Custard, Interface, Metadata } from "custardkit-ts/Custard";
+import { CustomKey, KeyDesign } from "custardkit-ts/Keys";
+import { Action } from "custardkit-ts/Actions";
+import { Layout, KeyData, GridFitSpecifier } from "custardkit-ts/Layout";
+import { InputStyle, KeyStyle, Language } from "custardkit-ts";
 
 // Create a simple key using factory methods
 const key = new CustomKey({
@@ -60,18 +55,6 @@ const custard = new Custard({
 
 // Write to file
 await custard.write("my_keyboard.json");
-```
-
-## Subpath Imports
-
-For direct class access:
-
-```typescript
-import { InputAction, DeleteAction } from "custardkit-ts/Actions";
-import { TextLabel } from "custardkit-ts/Labels";
-import { CustomKey, KeyDesign } from "custardkit-ts/Keys";
-import { GridFitLayout } from "custardkit-ts/Layout";
-import { Custard, Metadata, Interface } from "custardkit-ts/Custard";
 ```
 
 ## License
