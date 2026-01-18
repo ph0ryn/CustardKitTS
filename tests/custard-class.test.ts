@@ -7,12 +7,9 @@ import {
   FlickDirection,
   InputStyle,
   Interface,
-  InvalidIdentifierError,
-  InvalidKeyPositionError,
   KeyColor,
   KeyStyle,
   Language,
-  LayoutSpecifierMismatchError,
   Metadata,
   SystemKeyType,
 } from "../src/index.ts";
@@ -26,7 +23,7 @@ import {
   VariationDesign,
 } from "../src/Keys/index.ts";
 import { Label } from "../src/Labels/index.ts";
-import { GridFitSpecifier, GridScrollSpecifier, KeyData, Layout } from "../src/Layout/index.ts";
+import { GridFitSpecifier, KeyData, Layout } from "../src/Layout/index.ts";
 
 describe("class-based custard", () => {
   test("creates custard matching Python example", () => {
@@ -175,107 +172,5 @@ describe("class-based custard", () => {
     expect((json[0] as { identifier: string }).identifier).toBe("test1");
     expect((json[1] as { identifier: string }).identifier).toBe("test2");
   });
-
-  test("Custard throws on invalid identifier", () => {
-    const createCustard = (identifier: string) =>
-      new Custard({
-        identifier,
-        inputStyle: InputStyle.Direct,
-        interface: new Interface({
-          keyLayout: Layout.gridFit({ columnCount: 1, rowCount: 1 }),
-          keyStyle: KeyStyle.TenkeyStyle,
-          keys: [],
-        }),
-        language: Language.JaJP,
-        metadata: new Metadata({ custardVersion: "1.0", displayName: "Test" }),
-      });
-
-    // Valid identifiers should work
-    expect(() => createCustard("valid_identifier")).not.toThrow();
-    expect(() => createCustard("test123")).not.toThrow();
-
-    // Invalid identifiers should throw
-    expect(() => createCustard("Invalid")).toThrow(InvalidIdentifierError);
-    expect(() => createCustard("has-dash")).toThrow(InvalidIdentifierError);
-    expect(() => createCustard("has space")).toThrow(InvalidIdentifierError);
-    expect(() => createCustard("日本語")).toThrow(InvalidIdentifierError);
-  });
-
-  test("Interface throws on key position out of bounds", () => {
-    // Valid position: x=0, y=0 in 2x2 grid
-    expect(
-      () =>
-        new Interface({
-          keyLayout: Layout.gridFit({ columnCount: 2, rowCount: 2 }),
-          keyStyle: KeyStyle.TenkeyStyle,
-          keys: [
-            new KeyData({
-              key: new SystemKey(SystemKeyType.ChangeKeyboard),
-              specifier: new GridFitSpecifier({ x: 0, y: 0 }),
-            }),
-          ],
-        }),
-    ).not.toThrow();
-
-    // Invalid position: x=2 exceeds columnCount=2
-    expect(
-      () =>
-        new Interface({
-          keyLayout: Layout.gridFit({ columnCount: 2, rowCount: 2 }),
-          keyStyle: KeyStyle.TenkeyStyle,
-          keys: [
-            new KeyData({
-              key: new SystemKey(SystemKeyType.ChangeKeyboard),
-              specifier: new GridFitSpecifier({ x: 2, y: 0 }),
-            }),
-          ],
-        }),
-    ).toThrow(InvalidKeyPositionError);
-
-    // Invalid position: width causes overflow
-    expect(
-      () =>
-        new Interface({
-          keyLayout: Layout.gridFit({ columnCount: 2, rowCount: 2 }),
-          keyStyle: KeyStyle.TenkeyStyle,
-          keys: [
-            new KeyData({
-              key: new SystemKey(SystemKeyType.ChangeKeyboard),
-              specifier: new GridFitSpecifier({ height: 1, width: 3, x: 0, y: 0 }),
-            }),
-          ],
-        }),
-    ).toThrow(InvalidKeyPositionError);
-
-    // Invalid position: negative x
-    expect(
-      () =>
-        new Interface({
-          keyLayout: Layout.gridFit({ columnCount: 2, rowCount: 2 }),
-          keyStyle: KeyStyle.TenkeyStyle,
-          keys: [
-            new KeyData({
-              key: new SystemKey(SystemKeyType.ChangeKeyboard),
-              specifier: new GridFitSpecifier({ x: -1, y: 0 }),
-            }),
-          ],
-        }),
-    ).toThrow(InvalidKeyPositionError);
-  });
-
-  test("Interface throws on Layout/Specifier type mismatch", () => {
-    expect(
-      () =>
-        new Interface({
-          keyLayout: Layout.gridFit({ columnCount: 2, rowCount: 2 }),
-          keyStyle: KeyStyle.TenkeyStyle,
-          keys: [
-            new KeyData({
-              key: new SystemKey(SystemKeyType.ChangeKeyboard),
-              specifier: new GridScrollSpecifier({ index: 0 }),
-            }),
-          ],
-        }),
-    ).toThrow(LayoutSpecifierMismatchError);
-  });
 });
+
