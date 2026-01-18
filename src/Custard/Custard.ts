@@ -1,9 +1,13 @@
 import { writeFile } from "node:fs/promises";
 
+import { InvalidIdentifierError } from "../errors.ts";
+
 import type { Interface } from "./Interface.ts";
 import type { Metadata } from "./Metadata.ts";
 import type { InputStyle, Language } from "../enums.ts";
 import type { Serializable } from "../types.ts";
+
+const IDENTIFIER_PATTERN = /^[a-z0-9_]+$/;
 
 export interface CustardOptions {
   identifier: string;
@@ -21,6 +25,10 @@ export class Custard implements Serializable {
   public readonly interface: Interface;
 
   constructor(options: CustardOptions) {
+    if (!IDENTIFIER_PATTERN.test(options.identifier)) {
+      throw new InvalidIdentifierError(options.identifier);
+    }
+
     this.identifier = options.identifier;
     this.inputStyle = options.inputStyle;
     this.interface = options.interface;
