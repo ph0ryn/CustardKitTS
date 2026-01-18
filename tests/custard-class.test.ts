@@ -173,4 +173,3 @@ describe("class-based custard", () => {
     expect((json[1] as { identifier: string }).identifier).toBe("test2");
   });
 });
-
