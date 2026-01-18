@@ -1,3 +1,9 @@
+// Types
+export type { Serializable } from "./types.ts";
+
+// Errors
+export { CustardKitError, InvalidIdentifierError, ValidationError } from "./errors.ts";
+
 // Enums
 export {
   CharacterForm,
@@ -15,10 +21,10 @@ export {
 } from "./enums.ts";
 
 // Actions
-export { Action, type Action as ActionType, type Serializable } from "./actions.ts";
+export { Action, type Action as ActionType } from "./Actions/index.ts";
 
 // Labels
-export { Label } from "./labels.ts";
+export { Label, type DirectionalLabels } from "./Labels/index.ts";
 
 // Keys
 export {
@@ -40,21 +46,24 @@ export {
   type VariationData,
   type VariationDesignOptions,
   type VariationOptions,
-} from "./keys.ts";
+} from "./Keys/index.ts";
 
 // Layout
 export {
-  Layout,
+  GridFitLayout,
   GridFitSpecifier,
+  GridScrollLayout,
   GridScrollSpecifier,
   KeyData,
+  Layout,
   type GridFitLayoutOptions,
   type GridFitSpecifierOptions,
   type GridScrollLayoutOptions,
   type GridScrollSpecifierOptions,
   type KeyDataOptions,
+  type Layout as LayoutType,
   type Specifier,
-} from "./layout.ts";
+} from "./Layout/index.ts";
 
 // Custard
 export {
@@ -65,4 +74,4 @@ export {
   type CustardOptions,
   type InterfaceOptions,
   type MetadataOptions,
-} from "./custard.ts";
+} from "./Custard/index.ts";

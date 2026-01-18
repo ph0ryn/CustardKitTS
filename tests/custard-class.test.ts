@@ -9,6 +9,7 @@ import {
   GridFitSpecifier,
   InputStyle,
   Interface,
+  InvalidIdentifierError,
   KeyColor,
   KeyData,
   KeyDesign,
@@ -170,5 +171,30 @@ describe("class-based custard", () => {
     expect(json).toHaveLength(2);
     expect((json[0] as { identifier: string }).identifier).toBe("test1");
     expect((json[1] as { identifier: string }).identifier).toBe("test2");
+  });
+
+  test("Custard throws on invalid identifier", () => {
+    const createCustard = (identifier: string) =>
+      new Custard({
+        identifier,
+        inputStyle: InputStyle.Direct,
+        interface: new Interface({
+          keyLayout: Layout.gridFit({ columnCount: 1, rowCount: 1 }),
+          keyStyle: KeyStyle.TenkeyStyle,
+          keys: [],
+        }),
+        language: Language.JaJP,
+        metadata: new Metadata({ custardVersion: "1.0", displayName: "Test" }),
+      });
+
+    // Valid identifiers should work
+    expect(() => createCustard("valid_identifier")).not.toThrow();
+    expect(() => createCustard("test123")).not.toThrow();
+
+    // Invalid identifiers should throw
+    expect(() => createCustard("Invalid")).toThrow(InvalidIdentifierError);
+    expect(() => createCustard("has-dash")).toThrow(InvalidIdentifierError);
+    expect(() => createCustard("has space")).toThrow(InvalidIdentifierError);
+    expect(() => createCustard("日本語")).toThrow(InvalidIdentifierError);
   });
 });

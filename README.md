@@ -12,31 +12,30 @@ npm add custardkit-ts
 
 ```typescript
 import {
+  Action,
   Custard,
-  Interface,
-  Metadata,
-  GridFitLayout,
-  GridFitSpecifier,
-  KeyData,
   CustomKey,
-  KeyDesign,
-  TextLabel,
-  InputAction,
-  Language,
+  GridFitSpecifier,
   InputStyle,
-  KeyStyle,
+  Interface,
   KeyColor,
+  KeyData,
+  KeyDesign,
+  KeyStyle,
+  Label,
+  Language,
+  Layout,
+  Metadata,
 } from "custardkit-ts";
 
-// Create a simple key
+// Create a simple key using factory methods
 const key = new CustomKey({
-  design: new KeyDesign({
-    label: new TextLabel("あ"),
-    color: KeyColor.Normal,
-  }),
-  pressActions: [new InputAction("あ")],
-  variations: [],
+  design: KeyDesign.text("あ"),
+  pressActions: [Action.input("あ")],
 });
+
+// Create flick-style key
+const flickKey = CustomKey.flickSimpleInputs("あ", ["い", "う", "え", "お"]);
 
 // Create the custard
 const custard = new Custard({
@@ -49,7 +48,7 @@ const custard = new Custard({
   }),
   interface: new Interface({
     keyStyle: KeyStyle.TenkeyStyle,
-    keyLayout: new GridFitLayout({ rowCount: 5, columnCount: 4 }),
+    keyLayout: Layout.gridFit({ rowCount: 5, columnCount: 4 }),
     keys: [
       new KeyData({
         specifier: new GridFitSpecifier({ x: 0, y: 0 }),
@@ -61,6 +60,18 @@ const custard = new Custard({
 
 // Write to file
 await custard.write("my_keyboard.json");
+```
+
+## Subpath Imports
+
+For direct class access:
+
+```typescript
+import { InputAction, DeleteAction } from "custardkit-ts/Actions";
+import { TextLabel } from "custardkit-ts/Labels";
+import { CustomKey, KeyDesign } from "custardkit-ts/Keys";
+import { GridFitLayout } from "custardkit-ts/Layout";
+import { Custard, Metadata, Interface } from "custardkit-ts/Custard";
 ```
 
 ## License
