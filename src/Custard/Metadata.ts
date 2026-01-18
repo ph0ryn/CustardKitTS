@@ -1,3 +1,5 @@
+import { EmptyDisplayNameError } from "../errors.ts";
+
 import type { Serializable } from "../types.ts";
 
 export interface MetadataOptions {
@@ -10,6 +12,10 @@ export class Metadata implements Serializable {
   public readonly displayName: string;
 
   constructor(options: MetadataOptions) {
+    if (options.displayName === "") {
+      throw new EmptyDisplayNameError();
+    }
+
     this.custardVersion = options.custardVersion;
     this.displayName = options.displayName;
   }

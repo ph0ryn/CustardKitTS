@@ -1,3 +1,5 @@
+import { InvalidLayoutSizeError } from "../errors.ts";
+
 import type { Serializable } from "../types.ts";
 
 export interface GridFitSpecifierOptions {
@@ -14,8 +16,19 @@ export class GridFitSpecifier implements Serializable {
   public readonly height: number;
 
   constructor(options: GridFitSpecifierOptions) {
-    this.height = options.height ?? 1;
-    this.width = options.width ?? 1;
+    const width = options.width ?? 1;
+    const height = options.height ?? 1;
+
+    if (width < 1) {
+      throw new InvalidLayoutSizeError(`width (${width}) must be at least 1`);
+    }
+
+    if (height < 1) {
+      throw new InvalidLayoutSizeError(`height (${height}) must be at least 1`);
+    }
+
+    this.height = height;
+    this.width = width;
     this.x = options.x;
     this.y = options.y;
   }

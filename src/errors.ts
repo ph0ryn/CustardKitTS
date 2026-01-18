@@ -33,3 +33,17 @@ export class LayoutSpecifierMismatchError extends CustardKitError {
     this.name = "LayoutSpecifierMismatchError";
   }
 }
+
+export class InvalidLayoutSizeError extends CustardKitError {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidLayoutSizeError";
+  }
+}
+
+export class EmptyDisplayNameError extends CustardKitError {
+  constructor() {
+    super("displayName must not be empty");
+    this.name = "EmptyDisplayNameError";
+  }
+}
