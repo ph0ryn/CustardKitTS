@@ -1,0 +1,76 @@
+import { writeFile } from "node:fs/promises";
+
+import type { Interface } from "./Interface.ts";
+import type { Metadata } from "./Metadata.ts";
+import type { InputStyle, Language } from "../enums.ts";
+import type { Serializable } from "../types.ts";
+
+export interface CustardOptions {
+  identifier: string;
+  language: Language;
+  inputStyle: InputStyle;
+  metadata: Metadata;
+  interface: Interface;
+}
+
+export class Custard implements Serializable {
+  public readonly identifier: string;
+  public readonly language: Language;
+  public readonly inputStyle: InputStyle;
+  public readonly metadata: Metadata;
+  public readonly interface: Interface;
+
+  constructor(options: CustardOptions) {
+    this.identifier = options.identifier;
+    this.inputStyle = options.inputStyle;
+    this.interface = options.interface;
+    this.language = options.language;
+    this.metadata = options.metadata;
+  }
+
+  toJSON(): object {
+    return {
+      identifier: this.identifier,
+      input_style: this.inputStyle,
+      interface: this.interface.toJSON(),
+      language: this.language,
+      metadata: this.metadata.toJSON(),
+    };
+  }
+
+  async write(name: string): Promise<void> {
+    let filename: string = name;
+
+    if (!name.endsWith(".json")) {
+      filename = `${name}.json`;
+    }
+
+    const content = `${JSON.stringify(this, null, 2)}\n`;
+
+    await writeFile(filename, content, { encoding: "utf8" });
+  }
+}
+
+export class CustardList {
+  public readonly custards: Custard[];
+
+  constructor(custards: Custard[]) {
+    this.custards = custards;
+  }
+
+  toJSON(): object[] {
+    return this.custards.map((c) => c.toJSON());
+  }
+
+  async write(name: string): Promise<void> {
+    let filename: string = name;
+
+    if (!name.endsWith(".json")) {
+      filename = `${name}.json`;
+    }
+
+    const content = `${JSON.stringify(this.toJSON(), null, 2)}\n`;
+
+    await writeFile(filename, content, { encoding: "utf8" });
+  }
+}
