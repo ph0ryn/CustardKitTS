@@ -1,12 +1,13 @@
-import type { Label } from "../Labels/index.ts";
+import { Label, type Label as LabelType } from "../Labels/index.ts";
+
 import type { Serializable } from "../types.ts";
 
 export interface VariationDesignOptions {
-  label: Label;
+  label: LabelType;
 }
 
 export class VariationDesign implements Serializable {
-  public readonly label: Label;
+  public readonly label: LabelType;
 
   constructor(options: VariationDesignOptions) {
     this.label = options.label;
@@ -14,5 +15,9 @@ export class VariationDesign implements Serializable {
 
   toJSON(): object {
     return { label: this.label.toJSON() };
+  }
+
+  static text(text: string): VariationDesign {
+    return new VariationDesign({ label: Label.text(text) });
   }
 }

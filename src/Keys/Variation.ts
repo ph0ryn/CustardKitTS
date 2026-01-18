@@ -1,18 +1,18 @@
 import { LongpressAction } from "./LongpressAction.ts";
+import { VariationDesign } from "./VariationDesign.ts";
+import { Action, type Action as ActionType } from "../Actions/index.ts";
 
-import type { VariationDesign } from "./VariationDesign.ts";
-import type { Action } from "../Actions/index.ts";
 import type { Serializable } from "../types.ts";
 
 export interface VariationOptions {
   design: VariationDesign;
-  pressActions?: Action[];
+  pressActions?: ActionType[];
   longpressActions?: LongpressAction;
 }
 
 export class Variation implements Serializable {
   public readonly design: VariationDesign;
-  public readonly pressActions: Action[];
+  public readonly pressActions: ActionType[];
   public readonly longpressActions: LongpressAction;
 
   constructor(options: VariationOptions) {
@@ -27,5 +27,12 @@ export class Variation implements Serializable {
       longpress_actions: this.longpressActions.toJSON(),
       press_actions: this.pressActions.map((a) => a.toJSON()),
     };
+  }
+
+  static simpleInput(text: string, label?: string): Variation {
+    return new Variation({
+      design: VariationDesign.text(label ?? text),
+      pressActions: [Action.input(text)],
+    });
   }
 }

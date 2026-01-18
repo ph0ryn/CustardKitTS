@@ -20,4 +20,8 @@ export class Metadata implements Serializable {
       display_name: this.displayName,
     };
   }
+
+  static create(displayName: string, custardVersion: string = "1.2"): Metadata {
+    return new Metadata({ custardVersion, displayName });
+  }
 }
