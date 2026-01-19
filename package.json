@@ -19,7 +19,7 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "git config core.hooksPath .githooks",
     "lint": "oxlint --type-aware",
-    "prepack": "pnpm run precommit && pnpm run build && clean-pkg-json -r peerDependencies",
+    "prepack": "pnpm run precommit && pnpm run build && clean-pkg-json",
     "precommit": "pnpm test && pnpm run typecheck && pnpm run format",
     "test": "jest",
     "typecheck": "tsgo -p . --noEmit"
