@@ -92,7 +92,7 @@ describe("class-based custard", () => {
 
   test("labels serialize correctly", () => {
     const text = Label.text("ABC");
-    expect(text.toJSON()).toEqual({ text: "ABC" });
+    expect(text.toJSON()).toEqual({ type: "text", text: "ABC" });
   });
 
   test("key designs serialize correctly", () => {
@@ -102,7 +102,7 @@ describe("class-based custard", () => {
     });
     expect(design.toJSON()).toEqual({
       color: "special",
-      label: { text: "空白" },
+      label: { type: "text", text: "空白" },
     });
   });
 

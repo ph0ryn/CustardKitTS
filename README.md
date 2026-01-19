@@ -17,14 +17,7 @@ npm add custardkit-ts
 ## Usage
 
 ```typescript
-import {
-  Custard,
-  Interface,
-  Metadata,
-  InputStyle,
-  KeyStyle,
-  Language,
-} from "custardkit-ts";
+import { Custard, Interface, Metadata, InputStyle, KeyStyle, Language } from "custardkit-ts";
 import { CustomKey, KeyDesign } from "custardkit-ts/Keys";
 import { Action } from "custardkit-ts/Actions";
 import { Layout, KeyData, GridFitSpecifier } from "custardkit-ts/Layout";

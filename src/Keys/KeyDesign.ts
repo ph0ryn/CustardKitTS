@@ -3,11 +3,32 @@ import { KeyColor } from "../enums.ts";
 
 import type { Serializable } from "../types.ts";
 
+/**
+ * Options for creating a KeyDesign instance.
+ */
 export interface KeyDesignOptions {
+  /** The label to display on the key */
   label: LabelType;
+  /** The key color (defaults to Normal) */
   color?: KeyColor;
 }
 
+/**
+ * Represents the visual design of a key.
+ *
+ * @remarks
+ * A KeyDesign consists of:
+ * - **label**: What is displayed on the key (text, image, etc.).
+ * - **color**: The key's color theme (normal, special, selected, unimportant).
+ *
+ * @example
+ * ```typescript
+ * const design = new KeyDesign({ label: Label.text("A"), color: KeyColor.Normal });
+ * // or using static helpers
+ * const design = KeyDesign.text("A");
+ * const design = KeyDesign.create(Label.systemImage("delete.left"), KeyColor.Special);
+ * ```
+ */
 export class KeyDesign implements Serializable {
   public readonly label: LabelType;
   public readonly color: KeyColor;

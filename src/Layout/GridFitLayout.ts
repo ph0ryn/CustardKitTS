@@ -3,11 +3,34 @@ import { InvalidLayoutSizeError } from "../errors.ts";
 import type { Serializable } from "../types.ts";
 import type { GridFitSpecifier } from "./GridFitSpecifier.ts";
 
+/**
+ * Options for creating a GridFitLayout instance.
+ */
 export interface GridFitLayoutOptions {
+  /** Number of rows in the grid (must be >= 1) */
   rowCount: number;
+  /** Number of columns in the grid (must be >= 1) */
   columnCount: number;
 }
 
+/**
+ * A grid layout that fits all keys within the visible screen area.
+ *
+ * @remarks
+ * Keys are arranged in a grid where:
+ * - `rowCount` specifies the number of rows (vertical).
+ * - `columnCount` specifies the number of columns (horizontal).
+ *
+ * Each key position is specified using a {@link GridFitSpecifier} with x, y coordinates
+ * and optional width/height for spanning multiple cells.
+ *
+ * @example
+ * ```typescript
+ * const layout = new GridFitLayout({ rowCount: 4, columnCount: 5 });
+ * // or using the factory
+ * const layout = Layout.gridFit({ rowCount: 4, columnCount: 5 });
+ * ```
+ */
 export class GridFitLayout implements Serializable {
   public readonly rowCount: number;
   public readonly columnCount: number;
